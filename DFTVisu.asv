@@ -1,0 +1,16 @@
+function [mod, phase, freq] = DFTVisu(s, fs)
+N = length(s);
+    
+    X = fftshift(fft(s));
+    
+    mod = abs(X) / N;
+    
+    % Cálculo da fase (em radianos)
+    phase = angle(X);
+    
+    % Eliminar ruído numérico na fase quando o módulo é praticamente zero
+    phase(modulus < 1e-10) = 0;
+    
+    % Eixo de frequências cobrindo o período espectral principal [-fs/2, +fs/2)
+    freqs = (-N/2 : N/2 - 1) * (fs / N);
+end
